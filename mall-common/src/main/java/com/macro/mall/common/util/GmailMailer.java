@@ -1,13 +1,15 @@
 package com.macro.mall.common.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
-
+@Slf4j
 public class GmailMailer {
     final public static String username = "xxxx@gmail.com";
+    final public static String password = "xxxx";// Gmail password
     public static void sendMail(String recipient, String subject, String content) throws Exception {
-        final String password = "xxxxx"; // Gmail password
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
