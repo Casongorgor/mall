@@ -75,15 +75,15 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public void register(String username, String password, String telephone, String authCode) {
+    public void register(String username, String password, String email, String authCode) {
         //验证验证码
-        if(!verifyAuthCode(authCode,telephone)){
+        if(!verifyAuthCode(authCode,email)){
             Asserts.fail("验证码错误");
         }
         //查询是否已有该用户
         UmsMemberExample example = new UmsMemberExample();
         example.createCriteria().andUsernameEqualTo(username);
-        example.or(example.createCriteria().andPhoneEqualTo(telephone));
+        example.or(example.createCriteria().andPhoneEqualTo(email));
         List<UmsMember> umsMembers = memberMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(umsMembers)) {
             Asserts.fail("该用户已经存在");
@@ -91,7 +91,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         //没有该用户进行添加操作
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
-        umsMember.setPhone(telephone);
+        umsMember.setPhone(email);
         umsMember.setPassword(passwordEncoder.encode(password));
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);

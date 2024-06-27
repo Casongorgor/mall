@@ -1,6 +1,7 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.util.GmailMailer;
 import com.macro.mall.model.UmsMember;
 import com.macro.mall.portal.service.UmsMemberService;
 import io.swagger.annotations.Api;
@@ -40,9 +41,9 @@ public class UmsMemberController {
     @ResponseBody
     public CommonResult register(@RequestParam String username,
                                  @RequestParam String password,
-                                 @RequestParam String telephone,
+                                 @RequestParam String email,
                                  @RequestParam String authCode) {
-        memberService.register(username, password, telephone, authCode);
+        memberService.register(username, password, email, authCode);
         return CommonResult.success(null,"注册成功");
     }
 
@@ -75,9 +76,13 @@ public class UmsMemberController {
     @ApiOperation("获取验证码")
     @RequestMapping(value = "/getAuthCode", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult getAuthCode(@RequestParam String telephone) {
-        String authCode = memberService.generateAuthCode(telephone);
-        return CommonResult.success(authCode,"获取验证码成功");
+    public CommonResult getAuthCode(@RequestParam String email) {
+        if (email == null) {
+            return CommonResult.validateFailed("用户名或密码错误");
+        }
+        String authCode = memberService.generateAuthCode(email);
+        GmailMailer.sendAuthCode(email,authCode);
+        return CommonResult.success(null,"获取验证码成功");
     }
 
     @ApiOperation("会员修改密码")
