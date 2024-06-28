@@ -9,6 +9,8 @@ import com.macro.mall.common.api.IErrorCode;
 public class ApiException extends RuntimeException {
     private IErrorCode errorCode;
 
+    private String messageCode;
+
     public ApiException(IErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
@@ -16,6 +18,11 @@ public class ApiException extends RuntimeException {
 
     public ApiException(String message) {
         super(message);
+    }
+
+    public ApiException(String message,String messageCode) {
+        super(message);
+        this.messageCode = messageCode;
     }
 
     public ApiException(Throwable cause) {
@@ -28,5 +35,9 @@ public class ApiException extends RuntimeException {
 
     public IErrorCode getErrorCode() {
         return errorCode;
+    }
+
+    public String getMessageCode() {
+        return messageCode;
     }
 }

@@ -2,6 +2,7 @@ package com.macro.mall.common.exception;
 
 import cn.hutool.core.util.StrUtil;
 import com.macro.mall.common.api.CommonResult;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -24,6 +25,8 @@ public class GlobalExceptionHandler {
     public CommonResult handle(ApiException e) {
         if (e.getErrorCode() != null) {
             return CommonResult.failed(e.getErrorCode());
+        }else if(StringUtils.hasLength(e.getMessageCode())){
+            return CommonResult.failed(e.getMessage(),e.getMessageCode());
         }
         return CommonResult.failed(e.getMessage());
     }
@@ -61,7 +64,7 @@ public class GlobalExceptionHandler {
     public CommonResult handleSQLSyntaxErrorException(SQLSyntaxErrorException e) {
         String message = e.getMessage();
         if (StrUtil.isNotEmpty(message) && message.contains("denied")) {
-            message = "演示环境暂无修改权限，如需修改数据可本地搭建后台服务！";
+            message = "數據庫無更新權限，請聯繫管理員處理！";
         }
         return CommonResult.failed(message);
     }

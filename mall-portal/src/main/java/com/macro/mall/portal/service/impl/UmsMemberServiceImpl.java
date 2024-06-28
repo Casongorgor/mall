@@ -78,7 +78,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     public void register(String username, String password, String email, String authCode) {
         //验证验证码
         if(!verifyAuthCode(authCode,email)){
-            Asserts.fail("验证码错误");
+            Asserts.fail("验证码错误","error.code.017");
         }
         //查询是否已有该用户
         UmsMemberExample example = new UmsMemberExample();
@@ -86,7 +86,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         example.or(example.createCriteria().andPhoneEqualTo(email));
         List<UmsMember> umsMembers = memberMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(umsMembers)) {
-            Asserts.fail("该用户已经存在");
+            Asserts.fail("该用户已经存在","error.code.018");
         }
         //没有该用户进行添加操作
         UmsMember umsMember = new UmsMember();
@@ -123,11 +123,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         example.createCriteria().andPhoneEqualTo(telephone);
         List<UmsMember> memberList = memberMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(memberList)){
-            Asserts.fail("该账号不存在");
+            Asserts.fail("该账号不存在","error.code.019");
         }
         //验证验证码
         if(!verifyAuthCode(authCode,telephone)){
-            Asserts.fail("验证码错误");
+            Asserts.fail("验证码错误","error.code.017");
         }
         UmsMember umsMember = memberList.get(0);
         umsMember.setPassword(passwordEncoder.encode(password));

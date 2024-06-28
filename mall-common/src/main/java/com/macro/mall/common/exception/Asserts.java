@@ -11,6 +11,10 @@ public class Asserts {
         throw new ApiException(message);
     }
 
+    public static void fail(String message,String messageCode) {
+        throw new ApiException(message,messageCode);
+    }
+
     public static void fail(IErrorCode errorCode) {
         throw new ApiException(errorCode);
     }

@@ -41,7 +41,7 @@ public class GmailMailer {
             sendMail(toEmail, "Registration verification code", content);
         } catch (Exception e) {
             e.printStackTrace();
-            Asserts.fail("發送驗證碼失敗");
+            Asserts.fail("發送驗證碼失敗","error.code.001");
         }
     }
 

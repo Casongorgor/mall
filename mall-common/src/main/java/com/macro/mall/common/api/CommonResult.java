@@ -1,9 +1,12 @@
 package com.macro.mall.common.api;
 
+import lombok.Data;
+
 /**
  * 通用返回结果封装类
  * Created by macro on 2019/4/19.
  */
+@Data
 public class CommonResult<T> {
     /**
      * 状态码
@@ -13,6 +16,11 @@ public class CommonResult<T> {
      * 提示信息
      */
     private String message;
+
+    /**
+     * 提示信息
+     */
+    private String messageCode;
     /**
      * 数据封装
      */
@@ -24,6 +32,12 @@ public class CommonResult<T> {
     protected CommonResult(long code, String message, T data) {
         this.code = code;
         this.message = message;
+        this.data = data;
+    }
+    protected CommonResult(long code, String message,String messageCode, T data) {
+        this.code = code;
+        this.message = message;
+        this.messageCode = messageCode;
         this.data = data;
     }
 
@@ -70,6 +84,9 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
+    public static <T> CommonResult<T> failed(String message,String messageCode) {
+        return new CommonResult<T>(ResultCode.FAILED.getCode(), message,messageCode, null);
+    }
 
     /**
      * 失败返回结果
@@ -107,27 +124,4 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

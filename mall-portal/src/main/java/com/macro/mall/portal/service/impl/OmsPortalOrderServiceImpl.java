@@ -97,7 +97,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         List<OmsOrderItem> orderItemList = new ArrayList<>();
         //校验收货地址
         if(orderParam.getMemberReceiveAddressId()==null){
-            Asserts.fail("请选择收货地址！");
+            Asserts.fail("请选择收货地址！","error.code.002");
         }
         //获取购物车及优惠信息
         UmsMember currentMember = memberService.getCurrentMember();
@@ -124,7 +124,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         }
         //判断购物车中商品是否都有库存
         if (!hasStock(cartPromotionItemList)) {
-            Asserts.fail("库存不足，无法下单");
+            Asserts.fail("库存不足，无法下单","error.code.003");
         }
         //判断使用使用了优惠券
         if (orderParam.getCouponId() == null) {
@@ -136,7 +136,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
             //使用优惠券
             SmsCouponHistoryDetail couponHistoryDetail = getUseCoupon(cartPromotionItemList, orderParam.getCouponId());
             if (couponHistoryDetail == null) {
-                Asserts.fail("该优惠券不可用");
+                Asserts.fail("该优惠券不可用","error.code.004");
             }
             //对下单商品的优惠券进行处理
             handleCouponAmount(orderItemList, couponHistoryDetail);
@@ -152,7 +152,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
             BigDecimal totalAmount = calcTotalAmount(orderItemList);
             BigDecimal integrationAmount = getUseIntegrationAmount(orderParam.getUseIntegration(), totalAmount, currentMember, orderParam.getCouponId() != null);
             if (integrationAmount.compareTo(new BigDecimal(0)) == 0) {
-                Asserts.fail("积分不可用");
+                Asserts.fail("积分不可用","error.code.005");
             } else {
                 //可用情况下分摊到可用商品中
                 for (OmsOrderItem orderItem : orderItemList) {
@@ -267,7 +267,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         //只修改未付款状态的订单
         int updateCount = orderMapper.updateByExampleSelective(order, orderExample);
         if(updateCount==0){
-            Asserts.fail("订单不存在或订单状态不是未支付！");
+            Asserts.fail("订单不存在或订单状态不是未支付！","error.code.006");
         }
         //恢复所有下单商品的锁定库存，扣减真实库存
         OmsOrderDetail orderDetail = portalOrderDao.getDetail(orderId);
@@ -275,7 +275,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         for (OmsOrderItem orderItem : orderDetail.getOrderItemList()) {
             int count = portalOrderDao.reduceSkuStock(orderItem.getProductSkuId(),orderItem.getProductQuantity());
             if(count==0){
-                Asserts.fail("库存不足，无法扣减！");
+                Asserts.fail("库存不足，无法扣减！","error.code.007");
             }
             totalCount+=count;
         }
@@ -333,7 +333,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
                 for (OmsOrderItem orderItem : orderItemList) {
                     int count = portalOrderDao.releaseStockBySkuId(orderItem.getProductSkuId(),orderItem.getProductQuantity());
                     if(count==0){
-                        Asserts.fail("库存不足，无法释放！");
+                        Asserts.fail("库存不足，无法释放！","error.code.008");
                     }
                 }
             }
@@ -361,10 +361,10 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         UmsMember member = memberService.getCurrentMember();
         OmsOrder order = orderMapper.selectByPrimaryKey(orderId);
         if(!member.getId().equals(order.getMemberId())){
-            Asserts.fail("不能确认他人订单！");
+            Asserts.fail("不能确认他人订单！","error.code.009");
         }
         if(order.getStatus()!=2){
-            Asserts.fail("该订单还未发货！");
+            Asserts.fail("该订单还未发货！","error.code.010");
         }
         order.setStatus(3);
         order.setConfirmStatus(1);
@@ -432,13 +432,13 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         UmsMember member = memberService.getCurrentMember();
         OmsOrder order = orderMapper.selectByPrimaryKey(orderId);
         if(!member.getId().equals(order.getMemberId())){
-            Asserts.fail("不能删除他人订单！");
+            Asserts.fail("不能删除他人订单！","error.code.011");
         }
         if(order.getStatus()==3||order.getStatus()==4){
             order.setDeleteStatus(1);
             orderMapper.updateByPrimaryKey(order);
         }else{
-            Asserts.fail("只能删除已完成或已关闭的订单！");
+            Asserts.fail("只能删除已完成或已关闭的订单！","error.code.012");
         }
     }
 
@@ -753,7 +753,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
             skuStock.setLockStock(skuStock.getLockStock() + cartPromotionItem.getQuantity());
             int count = portalOrderDao.lockStockBySkuId(cartPromotionItem.getProductSkuId(),cartPromotionItem.getQuantity());
             if(count==0){
-                Asserts.fail("库存不足，无法下单");
+                Asserts.fail("库存不足，无法下单","error.code.003");
             }
         }
     }
