@@ -75,7 +75,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public void register(String username, String password, String email, String authCode) {
+    public void register(String username, String password, String email, String authCode, String country) {
         //验证验证码
         if(!verifyAuthCode(authCode,email)){
             Asserts.fail("验证码错误","error.code.017");
@@ -83,7 +83,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         //查询是否已有该用户
         UmsMemberExample example = new UmsMemberExample();
         example.createCriteria().andUsernameEqualTo(username);
-        example.or(example.createCriteria().andPhoneEqualTo(email));
+        example.or(example.createCriteria().andEmailEqualTo(email));
         List<UmsMember> umsMembers = memberMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(umsMembers)) {
             Asserts.fail("该用户已经存在","error.code.018");
@@ -91,7 +91,8 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         //没有该用户进行添加操作
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
-        umsMember.setPhone(email);
+        umsMember.setEmail(email);
+        umsMember.setCountry(country);
         umsMember.setPassword(passwordEncoder.encode(password));
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
@@ -118,15 +119,15 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
-    public void updatePassword(String telephone, String password, String authCode) {
+    public void updatePassword(String email, String password, String authCode) {
         UmsMemberExample example = new UmsMemberExample();
-        example.createCriteria().andPhoneEqualTo(telephone);
+        example.createCriteria().andEmailEqualTo(email);
         List<UmsMember> memberList = memberMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(memberList)){
             Asserts.fail("该账号不存在","error.code.019");
         }
         //验证验证码
-        if(!verifyAuthCode(authCode,telephone)){
+        if(!verifyAuthCode(authCode,email)){
             Asserts.fail("验证码错误","error.code.017");
         }
         UmsMember umsMember = memberList.get(0);

@@ -60,6 +60,12 @@ public class UmsMember implements Serializable {
     @ApiModelProperty(value = "历史积分数量")
     private Integer historyIntegration;
 
+    @ApiModelProperty(value = "郵件")
+    private String email;
+
+    @ApiModelProperty(value = "註冊國家")
+    private String country;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -214,6 +220,22 @@ public class UmsMember implements Serializable {
         this.historyIntegration = historyIntegration;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -239,6 +261,8 @@ public class UmsMember implements Serializable {
         sb.append(", growth=").append(growth);
         sb.append(", luckeyCount=").append(luckeyCount);
         sb.append(", historyIntegration=").append(historyIntegration);
+        sb.append(", email=").append(email);
+        sb.append(", country=").append(country);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

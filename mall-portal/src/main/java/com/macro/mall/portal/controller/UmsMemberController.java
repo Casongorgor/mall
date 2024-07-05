@@ -42,8 +42,9 @@ public class UmsMemberController {
     public CommonResult register(@RequestParam String username,
                                  @RequestParam String password,
                                  @RequestParam String email,
-                                 @RequestParam String authCode) {
-        memberService.register(username, password, email, authCode);
+                                 @RequestParam String authCode,
+    @RequestParam String country) {
+        memberService.register(username, password, email, authCode,country);
         return CommonResult.success(null,"注册成功");
     }
 
@@ -88,10 +89,10 @@ public class UmsMemberController {
     @ApiOperation("会员修改密码")
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updatePassword(@RequestParam String telephone,
+    public CommonResult updatePassword(@RequestParam String email,
                                  @RequestParam String password,
                                  @RequestParam String authCode) {
-        memberService.updatePassword(telephone,password,authCode);
+        memberService.updatePassword(email,password,authCode);
         return CommonResult.success(null,"密码修改成功");
     }
 

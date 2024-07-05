@@ -32,6 +32,8 @@ public class MinioController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MinioController.class);
     @Value("${minio.endpoint}")
     private String ENDPOINT;
+    @Value("${minio.showAddress}")
+    private String SHOWADDRESS;
     @Value("${minio.bucketName}")
     private String BUCKET_NAME;
     @Value("${minio.accessKey}")
@@ -73,10 +75,15 @@ public class MinioController {
                     .contentType(file.getContentType())
                     .stream(file.getInputStream(), file.getSize(), ObjectWriteArgs.MIN_MULTIPART_SIZE).build();
             minioClient.putObject(putObjectArgs);
+//            String presignedUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().
+//                    bucket(BUCKET_NAME).object(objectName).
+//                    expiry(-1).method(Method.GET).build()
+//            );
             LOGGER.info("文件上传成功!");
             MinioUploadDto minioUploadDto = new MinioUploadDto();
             minioUploadDto.setName(filename);
-            minioUploadDto.setUrl(ENDPOINT + "/" + BUCKET_NAME + "/" + objectName);
+//            minioUploadDto.setUrl(presignedUrl);
+            minioUploadDto.setUrl(SHOWADDRESS + "/" + BUCKET_NAME + "/" + objectName);
             return CommonResult.success(minioUploadDto);
         } catch (Exception e) {
             e.printStackTrace();
