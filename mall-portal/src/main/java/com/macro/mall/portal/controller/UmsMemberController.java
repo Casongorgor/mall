@@ -1,6 +1,7 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.exception.Asserts;
 import com.macro.mall.common.util.GmailMailer;
 import com.macro.mall.model.UmsMember;
 import com.macro.mall.portal.service.UmsMemberService;
@@ -55,7 +56,8 @@ public class UmsMemberController {
                               @RequestParam String password) {
         String token = memberService.login(username, password);
         if (token == null) {
-            return CommonResult.validateFailed("用户名或密码错误");
+            Asserts.fail("用户名或密码错误","error.code.019");
+//            return CommonResult.validateFailed("用户名或密码错误");
         }
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);

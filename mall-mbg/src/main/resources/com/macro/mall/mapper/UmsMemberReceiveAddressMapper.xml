@@ -12,6 +12,9 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="region" jdbcType="VARCHAR" property="region" />
     <result column="detail_address" jdbcType="VARCHAR" property="detailAddress" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="detail_address2" jdbcType="VARCHAR" property="detailAddress2" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, member_id, name, phone_number, default_status, post_code, province, city, region, 
-    detail_address
+    detail_address, country, area, detail_address2
   </sql>
   <select id="selectByExample" parameterType="com.macro.mall.model.UmsMemberReceiveAddressExample" resultMap="BaseResultMap">
     select
@@ -111,11 +114,13 @@
     </selectKey>
     insert into ums_member_receive_address (member_id, name, phone_number, 
       default_status, post_code, province, 
-      city, region, detail_address
+      city, region, detail_address, 
+      country, area, detail_address2
       )
     values (#{memberId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
       #{defaultStatus,jdbcType=INTEGER}, #{postCode,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}
+      #{city,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{detailAddress2,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.macro.mall.model.UmsMemberReceiveAddress">
@@ -151,6 +156,15 @@
       <if test="detailAddress != null">
         detail_address,
       </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="detailAddress2 != null">
+        detail_address2,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
@@ -179,6 +193,15 @@
       </if>
       <if test="detailAddress != null">
         #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress2 != null">
+        #{detailAddress2,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +244,15 @@
       <if test="row.detailAddress != null">
         detail_address = #{row.detailAddress,jdbcType=VARCHAR},
       </if>
+      <if test="row.country != null">
+        country = #{row.country,jdbcType=VARCHAR},
+      </if>
+      <if test="row.area != null">
+        area = #{row.area,jdbcType=VARCHAR},
+      </if>
+      <if test="row.detailAddress2 != null">
+        detail_address2 = #{row.detailAddress2,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +269,10 @@
       province = #{row.province,jdbcType=VARCHAR},
       city = #{row.city,jdbcType=VARCHAR},
       region = #{row.region,jdbcType=VARCHAR},
-      detail_address = #{row.detailAddress,jdbcType=VARCHAR}
+      detail_address = #{row.detailAddress,jdbcType=VARCHAR},
+      country = #{row.country,jdbcType=VARCHAR},
+      area = #{row.area,jdbcType=VARCHAR},
+      detail_address2 = #{row.detailAddress2,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +307,15 @@
       <if test="detailAddress != null">
         detail_address = #{detailAddress,jdbcType=VARCHAR},
       </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress2 != null">
+        detail_address2 = #{detailAddress2,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -285,7 +329,10 @@
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       region = #{region,jdbcType=VARCHAR},
-      detail_address = #{detailAddress,jdbcType=VARCHAR}
+      detail_address = #{detailAddress,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      detail_address2 = #{detailAddress2,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
