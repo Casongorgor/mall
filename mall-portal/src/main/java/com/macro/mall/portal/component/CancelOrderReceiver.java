@@ -20,7 +20,9 @@ public class CancelOrderReceiver {
     private OmsPortalOrderService portalOrderService;
     @RabbitHandler
     public void handle(Long orderId){
-        portalOrderService.cancelOrder(orderId);
-        LOGGER.info("process orderId:{}",orderId);
+        //TODO 暂时关闭自动取消订单MQ处理
+//        portalOrderService.cancelOrder(orderId);
+
+        LOGGER.info("【暂停】process cancel orderId:{}",orderId);
     }
 }

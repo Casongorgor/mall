@@ -136,6 +136,18 @@ public class OmsOrder implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date modifyTime;
 
+    @ApiModelProperty(value = "收件人国家")
+    private String receiverCountry;
+
+    @ApiModelProperty(value = "收件人地区")
+    private String receiverArea;
+
+    @ApiModelProperty(value = "收件人详细地址line2")
+    private String receiverDetailAddress2;
+
+    @ApiModelProperty(value = "支付備註")
+    private String payRemark;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -490,6 +502,38 @@ public class OmsOrder implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public String getReceiverCountry() {
+        return receiverCountry;
+    }
+
+    public void setReceiverCountry(String receiverCountry) {
+        this.receiverCountry = receiverCountry;
+    }
+
+    public String getReceiverArea() {
+        return receiverArea;
+    }
+
+    public void setReceiverArea(String receiverArea) {
+        this.receiverArea = receiverArea;
+    }
+
+    public String getReceiverDetailAddress2() {
+        return receiverDetailAddress2;
+    }
+
+    public void setReceiverDetailAddress2(String receiverDetailAddress2) {
+        this.receiverDetailAddress2 = receiverDetailAddress2;
+    }
+
+    public String getPayRemark() {
+        return payRemark;
+    }
+
+    public void setPayRemark(String payRemark) {
+        this.payRemark = payRemark;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -540,6 +584,10 @@ public class OmsOrder implements Serializable {
         sb.append(", receiveTime=").append(receiveTime);
         sb.append(", commentTime=").append(commentTime);
         sb.append(", modifyTime=").append(modifyTime);
+        sb.append(", receiverCountry=").append(receiverCountry);
+        sb.append(", receiverArea=").append(receiverArea);
+        sb.append(", receiverDetailAddress2=").append(receiverDetailAddress2);
+        sb.append(", payRemark=").append(payRemark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

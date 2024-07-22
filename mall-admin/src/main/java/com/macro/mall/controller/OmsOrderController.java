@@ -111,4 +111,14 @@ public class OmsOrderController {
         }
         return CommonResult.failed();
     }
+
+    @ApiOperation("線下支付成功更新")
+    @RequestMapping(value = "/paySuccess", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult paySuccess(@RequestParam Long orderId,
+                                   @RequestParam String remark) {
+        Integer payType= 100;//線下支付狀態為100
+        Integer count = orderService.paySuccess(orderId,payType,remark);
+        return CommonResult.success(count, "支付確認成功");
+    }
 }

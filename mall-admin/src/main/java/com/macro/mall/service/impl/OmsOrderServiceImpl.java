@@ -1,6 +1,7 @@
 package com.macro.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.macro.mall.common.exception.Asserts;
 import com.macro.mall.dao.OmsOrderDao;
 import com.macro.mall.dao.OmsOrderOperateHistoryDao;
 import com.macro.mall.dto.*;
@@ -8,6 +9,7 @@ import com.macro.mall.mapper.OmsOrderMapper;
 import com.macro.mall.mapper.OmsOrderOperateHistoryMapper;
 import com.macro.mall.model.OmsOrder;
 import com.macro.mall.model.OmsOrderExample;
+import com.macro.mall.model.OmsOrderItem;
 import com.macro.mall.model.OmsOrderOperateHistory;
 import com.macro.mall.service.OmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +151,37 @@ public class OmsOrderServiceImpl implements OmsOrderService {
         history.setNote("修改备注信息："+note);
         orderOperateHistoryMapper.insert(history);
         return count;
+    }
+
+    @Override
+    public Integer paySuccess(Long orderId, Integer payType, String remark) {
+        //修改订单支付状态
+        OmsOrder order = new OmsOrder();
+        order.setId(orderId);
+        order.setStatus(1);
+        order.setPaymentTime(new Date());
+        order.setPayType(payType);
+        order.setPayRemark(remark);
+        OmsOrderExample orderExample = new OmsOrderExample();
+        orderExample.createCriteria()
+                .andIdEqualTo(order.getId())
+                .andDeleteStatusEqualTo(0)
+                .andStatusEqualTo(0);
+        //只修改未付款状态的订单
+        int updateCount = orderMapper.updateByExampleSelective(order, orderExample);
+        if(updateCount==0){
+            Asserts.fail("订单不存在或订单状态不是未支付！","error.code.006");
+        }
+        //恢复所有下单商品的锁定库存，扣减真实库存
+        OmsOrderDetail orderDetail = orderDao.getDetail(orderId);
+        int totalCount = 0;
+        for (OmsOrderItem orderItem : orderDetail.getOrderItemList()) {
+            int count = orderDao.reduceSkuStock(orderItem.getProductSkuId(),orderItem.getProductQuantity());
+            if(count==0){
+                Asserts.fail("库存不足，无法扣减！","error.code.007");
+            }
+            totalCount+=count;
+        }
+        return totalCount;
     }
 }

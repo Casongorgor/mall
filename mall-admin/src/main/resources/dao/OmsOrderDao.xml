@@ -74,6 +74,7 @@
             oi.product_price item_product_price,
             oi.product_quantity item_product_quantity,
             oi.product_attr item_product_attr,
+            oi.product_sku_id item_product_sku_id,
             oh.id history_id,
             oh.operate_man history_operate_man,
             oh.create_time history_create_time,
@@ -87,4 +88,13 @@
             o.id = #{id}
         ORDER BY oi.id ASC,oh.create_time DESC
     </select>
+    <update id="reduceSkuStock">
+        UPDATE pms_sku_stock
+        SET lock_stock = lock_stock - #{quantity},
+            stock = stock - #{quantity}
+        WHERE
+            id = #{productSkuId}
+          AND stock - #{quantity} &gt;= 0
+          AND lock_stock - #{quantity} &gt;= 0
+    </update>
 </mapper>

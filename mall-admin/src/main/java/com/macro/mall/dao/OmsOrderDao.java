@@ -27,4 +27,9 @@ public interface OmsOrderDao {
      * 获取订单详情
      */
     OmsOrderDetail getDetail(@Param("id") Long id);
+
+    /**
+     * 根据商品的skuId扣减真实库存
+     */
+    int reduceSkuStock(@Param("productSkuId")Long productSkuId,@Param("quantity") Integer quantity);
 }
