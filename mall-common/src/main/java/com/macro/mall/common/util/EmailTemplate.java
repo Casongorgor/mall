@@ -53,21 +53,16 @@ public class EmailTemplate {
             "    <tr align=\"center\">\n" +
             "        <td>\n" +
             "            <div itemscope itemtype=\"//schema.org/EmailMessage\">\n" +
-            "                <div itemprop=\"action\" itemscope itemtype=\"//schema.org/ViewAction\">\n" +
-            "                    <link itemprop=\"url\"\n" +
-            "                          href=\"https://accounts.google.com/AccountChooser?Email=casonhuang56@gmail.com&amp;continue=https://myaccount.google.com/alert/nt/1718869462186?rfn%302%26rfnc%12%26eid%0%26et%1\"/>\n" +
-            "                    <meta itemprop=\"name\" content=\"Review Activity\"/>\n" +
-            "                </div>\n" +
             "            </div>\n" +
             "            <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"\n" +
             "                   style=\"padding-bottom: 20px; max-width: 516px; min-width: 220px;\">\n" +
             "                <tr>\n" +
             "                    <td width=\"8\" style=\"width: 8px;\"></td>\n" +
             "                    <td>\n" +
-            "                        <div style=\"border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 40px 20px;\"\n" +
+            "                        <div style=\"border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 30px 20px;\"\n" +
             "                             align=\"center\" class=\"mdv2rw\"><img\n" +
-            "                                src=\"https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_74x24dp.png\"\n" +
-            "                                width=\"74\" height=\"24\" aria-hidden=\"true\" style=\"margin-bottom: 16px;\" alt=\"Google\">\n" +
+            "                                src=\"http://www.sunshine-sky.com:9090/mall/icon.png\"\n" +
+            "                                width=\"174\"  aria-hidden=\"true\" style=\"margin-bottom: 16px;\" alt=\"Google\">\n" +
             "                            <div style=\"font-family: &#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;\">\n" +
             "                                <div style=\"font-size: 24px;\">Verify your email account</div>\n" +
             "                            </div>\n" +
