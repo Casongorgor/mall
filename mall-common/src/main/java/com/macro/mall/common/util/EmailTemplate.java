@@ -42,8 +42,6 @@ public class EmailTemplate {
             "            padding: 40px 40px;\n" +
             "        }\n" +
             "    } </style>\n" +
-            "    <link href=\"//fonts.googleapis.com/css?family=Google+Sans\" rel=\"stylesheet\" type=\"text/css\"\n" +
-            "          nonce=\"o5-sqaFKx0zCFvmw-KITVA\"/>\n" +
             "</head>\n" +
             "<body style=\"margin: 0; padding: 0;\" bgcolor=\"#FFFFFF\">\n" +
             "<table width=\"100%\" height=\"100%\" style=\"min-width: 348px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" lang=\"en\">\n" +
@@ -52,8 +50,6 @@ public class EmailTemplate {
             "    </tr>\n" +
             "    <tr align=\"center\">\n" +
             "        <td>\n" +
-            "            <div itemscope itemtype=\"//schema.org/EmailMessage\">\n" +
-            "            </div>\n" +
             "            <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"\n" +
             "                   style=\"padding-bottom: 20px; max-width: 516px; min-width: 220px;\">\n" +
             "                <tr>\n" +
@@ -62,8 +58,8 @@ public class EmailTemplate {
             "                        <div style=\"border-style: solid; border-width: thin; border-color:#dadce0; border-radius: 8px; padding: 30px 20px;\"\n" +
             "                             align=\"center\" class=\"mdv2rw\"><img\n" +
             "                                src=\"http://www.sunshine-sky.com:9090/mall/icon.png\"\n" +
-            "                                width=\"174\"  aria-hidden=\"true\" style=\"margin-bottom: 16px;\" alt=\"Google\">\n" +
-            "                            <div style=\"font-family: &#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;\">\n" +
+            "                                width=\"174\"  aria-hidden=\"true\" style=\"margin-bottom: 16px;\" alt=\"\">\n" +
+            "                            <div style=\"font-family: &#39; Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom: thin solid #dadce0; color: rgba(0,0,0,0.87); line-height: 32px; padding-bottom: 24px;text-align: center; word-break: break-word;\">\n" +
             "                                <div style=\"font-size: 24px;\">Verify your email account</div>\n" +
             "                            </div>\n" +
             "                            <div style=\"font-family: Roboto-Regular,Helvetica,Arial,sans-serif; font-size: 14px; color: rgba(0,0,0,0.87); line-height: 20px;padding-top: 20px; text-align: left;\">\n" +
